@@ -4,9 +4,9 @@
 // Company: 
 // Engineer:
 //
-// Create Date:   20:40:49 06/18/2024
+// Create Date:   20:55:25 06/18/2024
 // Design Name:   APB_UART_top
-// Module Name:   /home/hoanvip/VerilogProject/APB_UART_Project/ReceivedatanoParity.v
+// Module Name:   /home/hoanvip/VerilogProject/APB_UART_Project/TestAPBSLVERR.v
 // Project Name:  APB_UART_Project
 // Target Device:  
 // Tool versions:  
@@ -22,7 +22,7 @@
 // 
 ////////////////////////////////////////////////////////////////////////////////
 
-module ReceivedatanoParity;
+module TestAPBSLVERR;
 
 	// Inputs
 	reg pclk;
@@ -71,6 +71,7 @@ module ReceivedatanoParity;
 		.i_pe(i_pe), 
 		.i_fre(i_fre)
 	);
+
 initial begin
 //Task 1: Write 1 data and transfer by receiver
 		// Initialize Inputs
@@ -85,79 +86,71 @@ initial begin
 		pstrb = 0;
 		rxd = 1;
 
-		// Wait 100 ns for global reset to finish
+	/*	// Wait 100 ns for global reset to finish
 		#20;
 		presetn = 1;
 		#20;
-		//Set enbale signal
+		//Set wrong address
+		psel = 1;
+		pwrite = 1;
+		paddr = 32'b11001;
+		pwdata = 32'b11111111;
+		pstrb = 4'b1111;
+		#10;
+		penable = 1;
+		#30;
+		penable = 0;
+		psel = 0;
+		//Set baudrate
+		#20;
+				//Set enbale signal
 		psel = 1;
 		pwrite = 1;
 		paddr = 32'b1000;
-		pwdata = 32'b00111111;
+		pwdata = 32'b11111111;
 		pstrb = 4'b1111;
 		#10;
 		penable = 1;
 		#30;
 		penable = 0;
-		//Set baudrate
+		psel = 0;
+		#100; */
+		
+		
+				// Wait 100 ns for global reset to finish
+		#20;
+		presetn = 1;
+		#20;
+		//Set wrong pstrb
 		psel = 1;
 		pwrite = 1;
-		paddr = 32'b0100;
-		pwdata = 32'd14; //Baudrate 460800
-//		pwdata = 32'd54; //Baudrate 115200
-		pstrb = 4'b1111;
+		paddr = 32'b1000;
+		pwdata = 32'b11111111;
+		pstrb = 4'b1110;
 		#10;
 		penable = 1;
 		#30;
 		penable = 0;
 		psel = 0;
-		#10;
-		//Set data to receive
-		//Start bit
-		rxd = 0;
-		#2240;
-		//Bit 0
-		rxd = 1;
-		#2240;
-		//Bit 1
-		rxd = 0;
-		#2240;
-		//Bit 2
-		rxd = 0;
-		#2240;
-		//Bit 3
-		rxd = 1;
-		#2240;
-		//Bit 4
-		rxd = 1;
-		#2240;
-		//Bit 5
-		rxd = 0;
-		#2240;
-		//Bit 6
-		rxd = 1;
-		#2240;
-		//Bit 7
-		rxd = 1;
-		#2240;
-		//Stop bit
-		rxd = 1;
-		#2240;
-		//Read data
+		//Set baudrate
+		#20;
+				//Set enbale signal
 		psel = 1;
-		pwrite = 0;
-		paddr = 32'b0000;
+		pwrite = 1;
+		paddr = 32'b1000;
+		pwdata = 32'b11111111;
 		pstrb = 4'b1111;
 		#10;
 		penable = 1;
 		#30;
 		penable = 0;
 		psel = 0;
-		#10;
+		#100;
+		
 		$finish;
 
 	end
-	always begin
+    	always begin
 		pclk = ~pclk;
 		#5;
 		end

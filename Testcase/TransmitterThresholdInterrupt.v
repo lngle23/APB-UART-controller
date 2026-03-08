@@ -4,9 +4,9 @@
 // Company: 
 // Engineer:
 //
-// Create Date:   20:40:49 06/18/2024
+// Create Date:   20:53:44 06/18/2024
 // Design Name:   APB_UART_top
-// Module Name:   /home/hoanvip/VerilogProject/APB_UART_Project/ReceivedatanoParity.v
+// Module Name:   /home/hoanvip/VerilogProject/APB_UART_Project/TransmitterThresholdInterrupt.v
 // Project Name:  APB_UART_Project
 // Target Device:  
 // Tool versions:  
@@ -22,7 +22,7 @@
 // 
 ////////////////////////////////////////////////////////////////////////////////
 
-module ReceivedatanoParity;
+module TransmitterThresholdInterrupt;
 
 	// Inputs
 	reg pclk;
@@ -103,8 +103,7 @@ initial begin
 		psel = 1;
 		pwrite = 1;
 		paddr = 32'b0100;
-		pwdata = 32'd14; //Baudrate 460800
-//		pwdata = 32'd54; //Baudrate 115200
+		pwdata = 32'd14;
 		pstrb = 4'b1111;
 		#10;
 		penable = 1;
@@ -112,41 +111,11 @@ initial begin
 		penable = 0;
 		psel = 0;
 		#10;
-		//Set data to receive
-		//Start bit
-		rxd = 0;
-		#2240;
-		//Bit 0
-		rxd = 1;
-		#2240;
-		//Bit 1
-		rxd = 0;
-		#2240;
-		//Bit 2
-		rxd = 0;
-		#2240;
-		//Bit 3
-		rxd = 1;
-		#2240;
-		//Bit 4
-		rxd = 1;
-		#2240;
-		//Bit 5
-		rxd = 0;
-		#2240;
-		//Bit 6
-		rxd = 1;
-		#2240;
-		//Bit 7
-		rxd = 1;
-		#2240;
-		//Stop bit
-		rxd = 1;
-		#2240;
-		//Read data
+		//Set threshold
 		psel = 1;
-		pwrite = 0;
-		paddr = 32'b0000;
+		pwrite = 1;
+		paddr = 32'b1100;
+		pwdata = 32'b11;
 		pstrb = 4'b1111;
 		#10;
 		penable = 1;
@@ -154,12 +123,117 @@ initial begin
 		penable = 0;
 		psel = 0;
 		#10;
+		//Set data to transmiter
+		psel = 1;
+		pwrite = 1;
+		paddr = 32'b0000;
+		pwdata = 32'b11011001;
+		pstrb = 4'b1111;
+		#10;
+		penable = 1;
+		#30;
+		penable = 0;
+		psel = 0;
+		//Set data to transmiter
+		psel = 1;
+		pwrite = 1;
+		paddr = 32'b0000;
+		pwdata = 32'b11011001;
+		pstrb = 4'b1111;
+		#10;
+		penable = 1;
+		#30;
+		penable = 0;
+		//Set data to transmiter
+		psel = 1;
+		pwrite = 1;
+		paddr = 32'b0000;
+		pwdata = 32'b11011001;
+		pstrb = 4'b1111;
+		#10;
+		penable = 1;
+		#30;
+		penable = 0;
+		//Set data to transmiter
+		psel = 1;
+		pwrite = 1;
+		paddr = 32'b0000;
+		pwdata = 32'b11011001;
+		pstrb = 4'b1111;
+		#10;
+		penable = 1;
+		#30;
+		penable = 0;
+		//Set data to transmiter
+		psel = 1;
+		pwrite = 1;
+		paddr = 32'b0000;
+		pwdata = 32'b11011001;
+		pstrb = 4'b1111;
+		#10;
+		penable = 1;
+		#30;
+		penable = 0;
+		//Set data to transmiter
+		psel = 1;
+		pwrite = 1;
+		paddr = 32'b0000;
+		pwdata = 32'b11011001;
+		pstrb = 4'b1111;
+		#10;
+		penable = 1;
+		#30;
+		penable = 0;
+		//Set data to transmiter
+		psel = 1;
+		pwrite = 1;
+		paddr = 32'b0000;
+		pwdata = 32'b11011001;
+		pstrb = 4'b1111;
+		#10;
+		penable = 1;
+		#30;
+		penable = 0;
+		//Set data to transmiter
+		psel = 1;
+		pwrite = 1;
+		paddr = 32'b0000;
+		pwdata = 32'b11011001;
+		pstrb = 4'b1111;
+		#10;
+		penable = 1;
+		#30;
+		penable = 0;
+		//Set data to transmiter
+		psel = 1;
+		pwrite = 1;
+		paddr = 32'b0000;
+		pwdata = 32'b11011001;
+		pstrb = 4'b1111;
+		#10;
+		penable = 1;
+		#30;
+		penable = 0;
+		psel = 0;
+		//Set data to transmiter
+		psel = 1;
+		pwrite = 1;
+		paddr = 32'b0000;
+		pwdata = 32'b11011001;
+		pstrb = 4'b1111;
+		#10;
+		penable = 1;
+		#30;
+		penable = 0;
+		psel = 0;
+		#25000;
 		$finish;
 
 	end
 	always begin
 		pclk = ~pclk;
 		#5;
+
 		end
       
 endmodule

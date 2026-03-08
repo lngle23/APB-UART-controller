@@ -4,9 +4,9 @@
 // Company: 
 // Engineer:
 //
-// Create Date:   20:40:49 06/18/2024
+// Create Date:   20:52:20 06/18/2024
 // Design Name:   APB_UART_top
-// Module Name:   /home/hoanvip/VerilogProject/APB_UART_Project/ReceivedatanoParity.v
+// Module Name:   /home/hoanvip/VerilogProject/APB_UART_Project/TransReceiveSameTime.v
 // Project Name:  APB_UART_Project
 // Target Device:  
 // Tool versions:  
@@ -22,7 +22,7 @@
 // 
 ////////////////////////////////////////////////////////////////////////////////
 
-module ReceivedatanoParity;
+module TransReceiveSameTime;
 
 	// Inputs
 	reg pclk;
@@ -71,6 +71,7 @@ module ReceivedatanoParity;
 		.i_pe(i_pe), 
 		.i_fre(i_fre)
 	);
+
 initial begin
 //Task 1: Write 1 data and transfer by receiver
 		// Initialize Inputs
@@ -103,8 +104,7 @@ initial begin
 		psel = 1;
 		pwrite = 1;
 		paddr = 32'b0100;
-		pwdata = 32'd14; //Baudrate 460800
-//		pwdata = 32'd54; //Baudrate 115200
+		pwdata = 32'd14;
 		pstrb = 4'b1111;
 		#10;
 		penable = 1;
@@ -112,7 +112,18 @@ initial begin
 		penable = 0;
 		psel = 0;
 		#10;
-		//Set data to receive
+		//Set data to transmiter
+		psel = 1;
+		pwrite = 1;
+		paddr = 32'b0000;
+		pwdata = 32'b11011001;
+		pstrb = 4'b1111;
+		#10;
+		penable = 1;
+		#30;
+		penable = 0;
+		psel = 0;
+		//Receive data
 		//Start bit
 		rxd = 0;
 		#2240;
@@ -138,29 +149,30 @@ initial begin
 		rxd = 1;
 		#2240;
 		//Bit 7
-		rxd = 1;
+		rxd = 0;
 		#2240;
 		//Stop bit
 		rxd = 1;
 		#2240;
-		//Read data
+		#50;
 		psel = 1;
 		pwrite = 0;
 		paddr = 32'b0000;
-		pstrb = 4'b1111;
 		#10;
 		penable = 1;
 		#30;
 		penable = 0;
 		psel = 0;
-		#10;
+		#50;
 		$finish;
 
 	end
 	always begin
 		pclk = ~pclk;
 		#5;
+
 		end
+      
       
 endmodule
 

@@ -4,9 +4,9 @@
 // Company: 
 // Engineer:
 //
-// Create Date:   20:40:49 06/18/2024
+// Create Date:   20:51:22 06/18/2024
 // Design Name:   APB_UART_top
-// Module Name:   /home/hoanvip/VerilogProject/APB_UART_Project/ReceivedatanoParity.v
+// Module Name:   /home/hoanvip/VerilogProject/APB_UART_Project/ReceiveFakeStartBit.v
 // Project Name:  APB_UART_Project
 // Target Device:  
 // Tool versions:  
@@ -22,7 +22,7 @@
 // 
 ////////////////////////////////////////////////////////////////////////////////
 
-module ReceivedatanoParity;
+module ReceiveFakeStartBit;
 
 	// Inputs
 	reg pclk;
@@ -71,6 +71,7 @@ module ReceivedatanoParity;
 		.i_pe(i_pe), 
 		.i_fre(i_fre)
 	);
+
 initial begin
 //Task 1: Write 1 data and transfer by receiver
 		// Initialize Inputs
@@ -115,45 +116,10 @@ initial begin
 		//Set data to receive
 		//Start bit
 		rxd = 0;
-		#2240;
-		//Bit 0
+		#1000;
 		rxd = 1;
-		#2240;
-		//Bit 1
-		rxd = 0;
-		#2240;
-		//Bit 2
-		rxd = 0;
-		#2240;
-		//Bit 3
-		rxd = 1;
-		#2240;
-		//Bit 4
-		rxd = 1;
-		#2240;
-		//Bit 5
-		rxd = 0;
-		#2240;
-		//Bit 6
-		rxd = 1;
-		#2240;
-		//Bit 7
-		rxd = 1;
-		#2240;
-		//Stop bit
-		rxd = 1;
-		#2240;
-		//Read data
-		psel = 1;
-		pwrite = 0;
-		paddr = 32'b0000;
-		pstrb = 4'b1111;
-		#10;
-		penable = 1;
-		#30;
-		penable = 0;
-		psel = 0;
-		#10;
+		#25000;
+
 		$finish;
 
 	end
@@ -161,6 +127,7 @@ initial begin
 		pclk = ~pclk;
 		#5;
 		end
+      
       
 endmodule
 
